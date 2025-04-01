@@ -35,12 +35,22 @@ export default function Register() {
     }
 
     register(user).then((res) => {
+      console.log(res)
       if (res.token) {
         setToken(res.token)
         router.push('/')
       }
     })
   }
+
+//   login(user).then((res) => {
+//     if (res.token) {
+//       setToken(res.token)
+//       router.push('/')
+//     }
+//   })
+// }
+
 
   return (
     <div className="columns is-centered">
