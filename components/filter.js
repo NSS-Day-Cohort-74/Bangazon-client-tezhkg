@@ -15,7 +15,7 @@ export default function Filter({ productCount, onSearch, locations }) {
 
   const [showFilters, setShowFilters] = useState(false)
   const [query, setQuery] = useState('')
-  const [categories, setCategories] = useState([{id: 1, name: 'Apples'}, {id: 2, name: 'Oranges'}, {id: 3, name: 'Lemons'}])
+  const [categories, setCategories] = useState([])
   const [direction, setDirection] = useState('asc')
   const clear = () => {
     for (let ref in refEls) {
@@ -59,6 +59,12 @@ export default function Filter({ productCount, onSearch, locations }) {
     }
   }, [query])
 
+  useEffect(()=>{
+    getCategories().then((array)=>{
+      setCategories(array)
+    })
+  },[])
+
   const buildQuery = (key, value) => {
     if (value && value !== "0") {
       return `${key}=${value}&`
@@ -68,6 +74,7 @@ export default function Filter({ productCount, onSearch, locations }) {
 
   const filter = () => {
     let newQuery = ""
+    debugger
     for (let refEl in refEls) {
       newQuery += buildQuery(refEl, refEls[refEl].current.value)
     }
@@ -175,7 +182,6 @@ export default function Filter({ productCount, onSearch, locations }) {
                             }
                           }}
                         />
-                        desc
                       </label>
                     </div>
                   </div>
