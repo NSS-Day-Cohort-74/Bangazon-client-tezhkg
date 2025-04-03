@@ -32,6 +32,8 @@ export default function Cart() {
     })
   }, [])
 
+  //initae an http request to our api. 
+
   const completeOrder = (paymentTypeId) => {
     completeCurrentOrder(cart.id, paymentTypeId).then(() => router.push('/my-orders'))
   }
