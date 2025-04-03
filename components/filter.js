@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getCategories } from '../data/products'
 import { Input, Select } from './form-elements'
 
-export default function Filter({ productCount, onSearch, locations }) {
+export default function Filter({ productCount, onSearch, locations, setSearching }) {
   const refEls = {
     location: useRef(),
     category: useRef(),
@@ -17,12 +17,13 @@ export default function Filter({ productCount, onSearch, locations }) {
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState([])
   const [direction, setDirection] = useState('asc')
+  
   const clear = () => {
     for (let ref in refEls) {
       if (ref === 'direction') {
         refEls[ref].current.checked = false
         setDirection('asc')
-      } else if (["min_price", "name"].includes(ref)) {
+      } else if (["min_price", "name", "number_sold"].includes(ref)) {
         refEls[ref].current.value = ""
       }
       else {
@@ -30,6 +31,7 @@ export default function Filter({ productCount, onSearch, locations }) {
       }
     }
     onSearch('')
+    setQuery('')
   }
   const orderByOptions = [
     {
@@ -56,8 +58,15 @@ export default function Filter({ productCount, onSearch, locations }) {
   useEffect(() => {
     if (query) {
       onSearch(query)
+      setSearching(true)
+    } 
+    
+    if (!query){
+      setSearching(false)
     }
   }, [query])
+
+  console.log(query)
 
   useEffect(()=>{
     getCategories().then((array)=>{
@@ -74,7 +83,6 @@ export default function Filter({ productCount, onSearch, locations }) {
 
   const filter = () => {
     let newQuery = ""
-    debugger
     for (let refEl in refEls) {
       newQuery += buildQuery(refEl, refEls[refEl].current.value)
     }
