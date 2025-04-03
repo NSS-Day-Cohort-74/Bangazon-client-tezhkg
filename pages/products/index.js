@@ -11,6 +11,7 @@ export default function Products() {
   const [isLoading, setIsLoading] = useState(true)
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
     getCategories().then(data => {
@@ -43,29 +44,37 @@ export default function Products() {
     })
   }
 
-  console.log(categories)
-
   if (isLoading) return <p>{loadingMessage}</p>
 
   return (
     <>
-      <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
-
-      <div>
+        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} setSearching={setSearching}/>
+      
+      {searching ? (
+        <>
+          <h1 className='title pt-4'>Products matching filters</h1>
+          <div className="columns is-multiline">
+            {products.map(product => (
+              <ProductCard product={product} key={product.id} />
+            ))}
+          </div>
+        </>
+      ):(
+        <div>
         {categories.map(category => (
          <div key={category.id}>
           <h1 className='title pt-4' >{category.name}</h1>
           <div className='box'>
             <div className='columns is-multiline'>
-          {category.products.map(product => (
-              <ProductCard product={product}  key={product.id} className='column'/>   
-          ))}
+              {category.products.map(product => (
+              <ProductCard product={product}  key={product.id} className='column'/> ))}
             </div>
           </div>
         </div>              
         ))}
-      </div>
-    </>
+         </div>       
+      )}
+    </> 
   )
 }
 
