@@ -5,11 +5,15 @@ import Navbar from '../../components/navbar'
 import { addProduct } from '../../data/products'
 import ProductForm from '../../components/product/form'
 import Modal from '../../components/modal'
+
 export default function NewProduct() {
   const formEl = useRef()
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
+  const [errorData, setErrorData] = useState({})
 
+
+  
   const saveProduct = () => {
     const { name, description, price, category, location, quantity  } = formEl.current
     const product = {
@@ -20,21 +24,29 @@ export default function NewProduct() {
       location: location.value,
       quantity: quantity.value
     }
+
+    
     addProduct(product).then((res) => {
       if (!res?.id){
         setShowModal(true);
+        setErrorData(res)
       } else {
         router.push(`/products/${res.id}`)
       }
-
     })
 
   }
 console.log(showModal)
   return (
     <>
-     <Modal showModal={showModal} setShowModal={setShowModal} title="Price is out of range.">
-      <div className="modal-card-body">Your price is over the allowed $17,500. Please modify and try again.</div>
+     <Modal showModal={showModal} setShowModal={setShowModal}  title="There are issues with your submission.">
+      <div className="modal-card-body">
+        {Object.entries(errorData).map(([key, value])=> {
+          return (
+            <p>{key}: {value}</p>
+          )
+        })}
+      </div>
       <footer></footer>
      </Modal>
     <ProductForm
