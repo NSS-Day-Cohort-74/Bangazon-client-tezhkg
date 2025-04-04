@@ -43,7 +43,7 @@ console.log(showModal)
       <div className="modal-card-body">
         {Object.entries(errorData).map(([key, value])=> {
           return (
-            <p>{key}: {value}</p>
+            <p key={key}>{key}: {value}</p>
           )
         })}
       </div>
