@@ -30,6 +30,7 @@ export default function ProductForm({ formEl, saveEvent, title, router }) {
         <Input
           id="price"
           label="Price"
+          placeholder="Products must be more than $0.00 but can not exceed $17,500"
         />
         <Input
           id="location"

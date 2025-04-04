@@ -70,8 +70,19 @@ export function rateProduct(productId, rating) {
   })
 }
 
-export function addProduct(product) {
-  return fetchWithResponse(`products`, {
+// export function addProduct(product) {
+//   return fetchWithResponse(`products`, {
+//     method: 'POST',
+//     headers: {
+//       Authorization: `Token ${localStorage.getItem('token')}`,
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(product)
+//   })
+// }
+
+export const addProduct = async (product) => {
+  const response =  await fetch(`http://localhost:8000/products`, {
     method: 'POST',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
@@ -79,6 +90,8 @@ export function addProduct(product) {
     },
     body: JSON.stringify(product)
   })
+  const data = await response.json()
+  return data
 }
 
 export function editProduct(id, product) {
