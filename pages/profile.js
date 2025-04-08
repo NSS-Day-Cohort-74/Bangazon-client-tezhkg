@@ -72,7 +72,7 @@ export default function Profile() {
     </>
   )
 }
-
+ 
 Profile.getLayout = function getLayout(page) {
   return (
     <Layout>
