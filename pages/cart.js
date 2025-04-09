@@ -5,7 +5,7 @@ import Layout from '../components/layout'
 import Navbar from '../components/navbar'
 import CartDetail from '../components/order/detail'
 import CompleteFormModal from '../components/order/form-modal'
-import { completeCurrentOrder, getCart } from '../data/orders'
+import { completeCurrentOrder, deleteCurrentOrder, getCart } from '../data/orders'
 import { getPaymentTypes } from '../data/payment-types'
 import { removeProductFromOrder } from '../data/products'
 
@@ -19,7 +19,7 @@ export default function Cart() {
     getCart().then(cartData => {
       if (cartData) {
         setCart(cartData)
-      } else {""}
+      } else {{}}
     })
   }
 
@@ -42,6 +42,12 @@ export default function Cart() {
     removeProductFromOrder(productId).then(refresh)
   }
 
+  const handleDeleteOrder = (orderId) => {
+    deleteCurrentOrder(orderId).then(() => {
+      setCart({})
+    })
+  }
+
   return (
     <>
       <CompleteFormModal
@@ -53,8 +59,11 @@ export default function Cart() {
       <CardLayout title="Your Current Order">
         <CartDetail cart={cart} removeProduct={removeProduct} />
         <>
-          <a className="card-footer-item" onClick={() => setShowCompleteForm(true)}>Complete Order</a>
-          <a className="card-footer-item">Delete Order</a>
+          {cart.lineitems && cart.lineitems.length > 0 ? (
+            <a className="card-footer-item" onClick={() => setShowCompleteForm(true)}>Complete Order</a>
+
+          ) : (<span className='card-footer-item is-disabled'>Complete Order</span>)}
+          <a className="card-footer-item" onClick={() => handleDeleteOrder(cart.id)}>Delete Order</a>
         </>
       </CardLayout>
     </>
