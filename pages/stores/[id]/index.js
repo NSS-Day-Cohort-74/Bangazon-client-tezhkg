@@ -58,6 +58,7 @@ export default function StoreDetail() {
           key={product.id}
           isOwner={isOwner}
           removeProduct={removeProduct}
+          noButtons={true}
         />
       ))
     }
@@ -86,7 +87,7 @@ export default function StoreDetail() {
                     key={product.id}
                     isOwner={isOwner}
                     removeProduct={removeProduct}
-                    noButtons={true}
+                    noButtons={false}
                   />
                 ))
               }
