@@ -1,9 +1,10 @@
 import { Rating } from 'react-simple-star-rating'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function RatingForm({ saveRating }) {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
+  const [showRating, setShowRating] = useState(false)
   
   const submitRating = () => {
     const outOf5 = rating/20
@@ -13,13 +14,15 @@ export default function RatingForm({ saveRating }) {
     })
   }
 
+  useEffect(()=>{setShowRating(true)}, [])
+
 
 
   return (
     <div className="tile is-child ">
       <article className="media box">
         <figure className="media-left">
-          <Rating onClick={setRating} ratingValue={rating} />
+          {showRating && <Rating onClick={setRating} ratingValue={rating} />}
         </figure>
         <div className="media-content">
           <div className="field">
