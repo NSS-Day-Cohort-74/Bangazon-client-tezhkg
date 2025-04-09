@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export function ProductCard({ product, removeProduct, isOwner = false, width="is-one-fifth" }) {
+export function ProductCard({ product, removeProduct, isOwner = false, width="is-one-fifth", noButtons }) {
   return (
     <div className={`column ${width}`}>
       <div className="card">
@@ -20,7 +20,7 @@ export function ProductCard({ product, removeProduct, isOwner = false, width="is
           </div>
         </div>
         {
-          isOwner ?
+          isOwner && noButtons ?
             <footer className="card-footer">
               <Link href={`/products/${product.id}/edit`} className="card-footer-item">Edit</Link>
               <a onClick={() => removeProduct(product.id)} className="card-footer-item">Delete</a>
