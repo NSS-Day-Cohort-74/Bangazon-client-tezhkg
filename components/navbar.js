@@ -74,6 +74,7 @@ export default function Navbar() {
   }
 
   return (
+    <section className='section'>
 
     <nav className="navbar mb-3 is-warning px-5 is-fixed-top is-top" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -102,5 +103,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </section>
   )
 }
