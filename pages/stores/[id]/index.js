@@ -45,22 +45,28 @@ export default function StoreDetail() {
   return (
     <>
       <Detail store={store} isOwner={isOwner} favorite={favorite} unfavorite={unfavorite} />
-      <div className="columns is-multiline">
+      <div className="container">
         {
-          store.products?.map(product => (
-            <ProductCard
-              product={product}
-              key={product.id}
-              isOwner={isOwner}
-              removeProduct={removeProduct}
-            />
-          ))
-        }
-        {
-          store.products?.length === 0 ?
+          store.products_products?.length === 0 ?
             <p>There's no products yet</p>
             :
-            <></>
+            <div>
+              <h1 className='title'>Selling:</h1>
+              <div className='section card'>
+                <div className='columns is-multiline'>
+              {
+                store.store_products?.map(product => (
+                  <ProductCard
+                    product={product}
+                    key={product.id}
+                    isOwner={isOwner}
+                    removeProduct={removeProduct}
+                  />
+                ))
+              }
+              </div>
+              </div>
+            </div>
         }
       </div>
     </>
