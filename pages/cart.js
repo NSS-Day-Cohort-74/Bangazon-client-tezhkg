@@ -19,7 +19,7 @@ export default function Cart() {
     getCart().then(cartData => {
       if (cartData) {
         setCart(cartData)
-      }
+      } else {""}
     })
   }
 
