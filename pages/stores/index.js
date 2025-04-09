@@ -4,29 +4,49 @@ import Navbar from '../../components/navbar'
 import { StoreCard } from '../../components/store/card'
 import { getStores } from '../../data/stores'
 
-
 export default function Stores() {
   const [stores, setStores] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    getStores().then(data => {
-      if (data) {
-        setStores(data)
-      }
-    })
+    getStores()
+      .then(data => {
+        if (data) {
+          setStores(data)
+          setIsLoading(false)
+        }
+      })
+      .catch(error => {
+        console.error("Failed to fetch stores:", error)
+        setIsLoading(false)
+      })
   }, [])
 
   return (
-    <>
-      <h1 className="title">Stores</h1>
-      <div className="columns is-multiline">
-      {
-        stores.map(store => (
-          <StoreCard store={store} key={store.id} />
-        ))
-      }
-      </div>
-    </>
+    <div className="container">
+      <section className="section">
+        <h1 className="title is-2 has-text-centered mb-6 mt-6">Stores</h1>
+        
+        {isLoading ? (
+          <div className="has-text-centered">
+            <span className="icon is-large">
+              <i className="fas fa-spinner fa-pulse"></i>
+            </span>
+            <p>Loading stores...</p>
+          </div>
+        ) : stores.length === 0 ? (
+          <div className="notification is-warning has-text-centered">
+            No stores found.
+          </div>
+        ) : (
+          <div className="columns is-multiline is-variable is-4">
+            {stores.map(store => (
+              <StoreCard store={store} key={store.id} />
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
   )
 }
 
