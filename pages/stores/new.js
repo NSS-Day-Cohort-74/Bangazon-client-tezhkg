@@ -8,7 +8,6 @@ import StoreForm from '../../components/store/form'
 
 export default function NewStore() {
   const { setProfile, profile } = useAppContext()
-
   const nameEl = useRef()
   const descriptionEl = useRef()
   const router = useRouter()
