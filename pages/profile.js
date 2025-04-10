@@ -41,7 +41,7 @@ console.log(profile.favorite_sellers)
       <CardLayout title="Products you've recommended" width="is-full">
         <div className="columns is-multiline">
           {
-            profile.recommended_by?.map(recommendation => (
+            profile.recommends?.map(recommendation => (
               <ProductCard product={recommendation.product} key={recommendation.product.id} width="is-one-third" />
             ))
           }
@@ -51,7 +51,7 @@ console.log(profile.favorite_sellers)
       <CardLayout title="Products recommended to you" width="is-full">
         <div className="columns is-multiline">
           {
-            profile.recommendations?.map(recommendation => (
+            profile.recommendation_received?.map(recommendation => (
               <ProductCard product={recommendation.product} key={recommendation.product.id} width="is-one-third" />
             ))
           }
