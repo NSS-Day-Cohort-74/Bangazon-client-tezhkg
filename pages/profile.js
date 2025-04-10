@@ -51,7 +51,7 @@ export default function Profile() {
       <CardLayout title="Products recommended to you" width="is-full">
         <div className="columns is-multiline">
           {
-            profile.recommendations?.map(recommendation => (
+            profile.recommendation?.map(recommendation => (
               <ProductCard product={recommendation.product} key={recommendation.product.id} width="is-one-third" />
             ))
           }
