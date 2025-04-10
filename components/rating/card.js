@@ -11,7 +11,7 @@ export function RatingCard({ rating }) {
     <div className="tile is-child">
       <article className="media box is-align-items-center">
         <figure className="media-left">
-          {showRating && <Rating initialValue={rating.score} readonly={true} />}
+          {showRating && <Rating initialValue={rating.rating} readonly={true} />}
         </figure>
         <div className="media-content">
           <div className="content">
