@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ProductCard } from '../product/card'
 
-export function StoreCard({ store, width= "is-half" }) {
+export function StoreCard({ store, showProductCards=true, width= "is-half" }) {
   return (
     <div className={`column ${width}`}>
       <div className="card">
@@ -22,7 +22,7 @@ export function StoreCard({ store, width= "is-half" }) {
               Products: {store.size}
             </span>
           </div>
-          
+          {showProductCards &&
           <div className="content">
             <p className="title is-5 has-text-centered mb-4">All Products</p>
             <div className="columns is-multiline is-mobile">
@@ -35,6 +35,7 @@ export function StoreCard({ store, width= "is-half" }) {
               ))}
             </div>
           </div>
+          }
         </div>
         
         <footer className="card-footer">

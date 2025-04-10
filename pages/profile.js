@@ -25,14 +25,14 @@ export default function Profile() {
     })
   }, [])
 
-
+console.log(profile.favorite_sellers)
   return (
     <>
       <CardLayout title="Favorite Stores" width="is-full">
         <div className="columns is-multiline">
           {
-            profile.favorites?.map(favorite => (
-              <StoreCard store={favorite} key={favorite.id} width="is-one-third" />
+            profile.favorite_sellers?.map(favorite => (
+              <StoreCard store={favorite} showProductCards={false} key={favorite.id} width="is-one-third" />
             ))
           }
         </div>
