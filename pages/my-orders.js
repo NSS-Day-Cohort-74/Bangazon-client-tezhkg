@@ -4,9 +4,11 @@ import Layout from '../components/layout'
 import Navbar from '../components/navbar'
 import Table from '../components/table'
 import { getOrders } from '../data/orders'
+import { getPaymentTypes } from '../data/payment-types'
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
+  const [paymentTypes, setPaymentTypes] = useState([])
   const headers = ['Order Date', 'Total', 'Payment Method']
 
   useEffect(() => {
@@ -15,18 +17,26 @@ export default function Orders() {
         setOrders(ordersData)
       }
     })
+    getPaymentTypes().then(paymentData => {
+      setPaymentTypes(paymentData)
+    })
   }, [])
+
+  const ordersWithPaymentDetails = orders.map(order => {
+    const paymentDetails = paymentTypes.find(payment => payment.url == order.payment_type)
+    return {...order, payment_type_details: paymentDetails}
+  })
 
   return (
     <>
       <CardLayout title="Your Orders">
         <Table headers={headers}>
           {
-            orders.map((order) => (
+            ordersWithPaymentDetails.map((order) => (
               <tr key={order.id}>
                 <td>{order.completed_on}</td>
                 <td>${order.total}</td>
-                <td>{order.payment_type?.obscured_num}</td>
+                <td>{order.payment_type_details ? `${order.payment_type_details.merchant_name} - ${order.payment_type_details?.account_number}` : 'No Payment Method'}</td>
               </tr>
             ))
           }
