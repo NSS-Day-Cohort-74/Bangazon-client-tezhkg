@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
 import { rateProduct } from '../../data/products'
 import { RatingsContainer } from './container'
 import { Header } from './header'
 
 export function Ratings({ product, average_rating, refresh, ratings = [], number_purchased, likes = [] }) {
-  const [productId, setProductId] = useState([])
 
   const saveRating = (newRating) => {
     rateProduct(product.id, newRating).then(refresh)
