@@ -12,9 +12,11 @@ export default function RatingForm({ saveRating }) {
       rating: outOf5,
       review: comment
     })
+    setComment("")
+    setRating(0)
   }
 
-  useEffect(()=>{setShowRating(true)}, [])
+  useEffect(()=>{setShowRating(true)}, [submitRating])
 
 
 
