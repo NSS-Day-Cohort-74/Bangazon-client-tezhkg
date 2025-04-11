@@ -1,14 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export function ProductCard({ product, removeProduct, isOwner = false, width="is-one-fifth", noButtons }) {
-  const image_src = 'http://localhost:8000' + product.image_path
+export function ProductCard({ product, removeProduct, isOwner = false, img_src, width="is-one-fifth", noButtons }) {
   return (
     <div className={`column ${width}`}>
       <div className="card">
         <div className="card-image">
           <figure className="image is-4by3">
-            <img src={image_src} alt="Placeholder image"></img>
+            <img src={img_src}></img>
           </figure>
         </div>
         <header className="card-header">

@@ -42,7 +42,7 @@ console.log(profile.favorite_sellers)
         <div className="columns is-multiline">
           {
             profile.recommends?.map(recommendation => (
-              <ProductCard product={recommendation.product} key={recommendation.product.id} width="is-one-third" />
+              <ProductCard product={recommendation.product} key={recommendation.product.id} img_src={recommendation.product.image_path} width="is-one-third" />
             ))
           }
         </div>
@@ -52,7 +52,7 @@ console.log(profile.favorite_sellers)
         <div className="columns is-multiline">
           {
             profile.recommendation_received?.map(recommendation => (
-              <ProductCard product={recommendation.product} key={recommendation.product.id} width="is-one-third" />
+              <ProductCard product={recommendation.product} key={recommendation.product.id} img_src={recommendation.product.image_path} width="is-one-third" />
             ))
           }
         </div>
@@ -63,7 +63,7 @@ console.log(profile.favorite_sellers)
         <div className="columns is-multiline">
           {
             productsLikedList?.map(product => (
-              <ProductCard product={product} key={product.id} width="is-one-third" />
+              <ProductCard product={product} key={product.id} img_src={product.image_path} width="is-one-third" />
             ))
           }
         </div>

@@ -43,7 +43,6 @@ export default function Products() {
       }
     })
   }
-
   if (isLoading) return <p>{loadingMessage}</p>
 
   return (
@@ -55,7 +54,7 @@ export default function Products() {
           <h1 className='title pt-4'>Products matching filters</h1>
           <div className="columns is-multiline">
             {products.map(product => (
-              <ProductCard product={product} key={product.id} />
+              <ProductCard product={product} key={product.id} img_src={product.image_path}/>
             ))}
           </div>
         </>
@@ -67,7 +66,7 @@ export default function Products() {
           <div className='box'>
             <div className='columns is-multiline'>
               {category.products.map(product => (
-              <ProductCard product={product}  key={product.id} className='column'/> ))}
+              <ProductCard product={product}  key={product.id} img_src={`http://localhost:8000${product.image_path}`} className='column'/> ))}
             </div>
           </div>
         </div>              
