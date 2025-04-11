@@ -50,7 +50,7 @@ export function favoriteStore(storeId) {
 }
 
 export function unfavoriteStore(storeId) {
-  return fetchWithoutResponse(`stores/${storeId}/unfavorite`, {
+  return fetchWithoutResponse(`profile/${storeId}/unfavorite`, {
     method: 'DELETE',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
