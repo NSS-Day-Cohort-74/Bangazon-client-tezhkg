@@ -11,11 +11,11 @@ export default function NewProduct() {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const [errorData, setErrorData] = useState({})
+  const [productImage, setProductImage] = useState(null)  // Add state for the image
 
-
-  
   const saveProduct = () => {
-    const { name, description, price, category, location, quantity  } = formEl.current
+    const { name, description, price, category, location, quantity } = formEl.current
+
     const product = {
       name: name.value,
       description: description.value,
@@ -25,6 +25,10 @@ export default function NewProduct() {
       quantity: quantity.value
     }
 
+    // Add the base64 image string directly
+    if (productImage) {
+      product.image_path = productImage
+    }
     
     addProduct(product).then((res) => {
       if (!res?.id){
@@ -34,27 +38,28 @@ export default function NewProduct() {
         router.push(`/products/${res.id}`)
       }
     })
-
   }
-console.log(showModal)
+
   return (
     <>
-     <Modal showModal={showModal} setShowModal={setShowModal}  title="There are issues with your submission.">
-      <div className="modal-card-body">
-        {Object.entries(errorData).map(([key, value])=> {
-          return (
-            <p key={key}>{key}: {value}</p>
-          )
-        })}
-      </div>
-      <footer></footer>
-     </Modal>
-    <ProductForm
-      formEl={formEl}
-      saveEvent={saveProduct}
-      title="Add a new product"
-      router={router}
-    ></ProductForm>
+      <Modal showModal={showModal} setShowModal={setShowModal} title="There are issues with your submission.">
+        <div className="modal-card-body">
+          {Object.entries(errorData).map(([key, value]) => {
+            return (
+              <p key={key}>{key}: {value}</p>
+            )
+          })}
+        </div>
+        <footer></footer>
+      </Modal>
+      <ProductForm
+        formEl={formEl}
+        saveEvent={saveProduct}
+        title="Add a new product"
+        router={router}
+        setProductImage={setProductImage}
+        productImage={productImage}
+      />
     </>
   )
 }
