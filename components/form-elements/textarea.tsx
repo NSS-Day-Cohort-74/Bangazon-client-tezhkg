@@ -4,7 +4,7 @@ interface TextAreaProps {
   placeholder: string
 }
 
-export function Textarea ({id, label, placeholder}: TextAreaProps) {
+export function Textarea ({id, label, placeholder}: TextAreaProps){
   return (
     <div className="field">
       <label className="label">{label}</label>
