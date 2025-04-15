@@ -1,6 +1,8 @@
 import { fetchWithResponse, fetchWithoutResponse } from './fetcher'
 
 export function getProducts(query=undefined) {
+  console.log("Query received:", query)
+
   let url = 'products'
 
   if (query) {

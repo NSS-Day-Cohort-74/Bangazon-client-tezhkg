@@ -32,6 +32,7 @@ export default function Filter({ productCount, onSearch, locations, setSearching
     }
     onSearch('')
     setQuery('')
+    setSearching(null)
   }
   const orderByOptions = [
     {
@@ -60,10 +61,6 @@ export default function Filter({ productCount, onSearch, locations, setSearching
       onSearch(query)
       setSearching(true)
     } 
-    
-    if (!query){
-      setSearching(false)
-    }
   }, [query])
 
   console.log(query)
