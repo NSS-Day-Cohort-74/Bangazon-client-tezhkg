@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import Navbar from '../../components/navbar'
 import { StoreCard } from '../../components/store/card'
 import { getStores } from '../../data/stores'
+import { useQuery } from '@tanstack/react-query'
 
 export default function Stores() {
-  const [stores, setStores] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    getStores()
-      .then(data => {
-        if (data) {
-          setStores(data)
-          setIsLoading(false)
-        }
-      })
-      .catch(error => {
-        console.error("Failed to fetch stores:", error)
-        setIsLoading(false)
-      })
-  }, [])
+  const { data: stores = [], isLoading } = useQuery({
+    queryKey: ['stores'],
+    queryFn: getStores
+  })
 
   return (
     <div className="container">

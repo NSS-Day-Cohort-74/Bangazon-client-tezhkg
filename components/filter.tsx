@@ -2,38 +2,77 @@ import { useEffect, useRef, useState } from 'react'
 import { getCategories } from '../data/products'
 import { Input, Select } from './form-elements'
 
-export default function Filter({ productCount, onSearch, locations, setSearching }) {
-  const refEls = {
-    location: useRef(),
-    category: useRef(),
-    name: useRef(),
-    min_price: useRef(),
-    order_by: useRef(),
-    direction: useRef(),
-    number_sold: useRef(),
+// Define interfaces for our data structures
+interface Location {
+  id: string | number;
+  name: string;
+}
+
+interface Category {
+  id: string | number;
+  name: string;
+}
+
+interface OrderByOption {
+  id: string;
+  name: string;
+}
+
+interface DirectionOption {
+  name: string;
+  label: string;
+}
+
+interface RefElements {
+  location: React.RefObject<HTMLSelectElement>;
+  category: React.RefObject<HTMLSelectElement>;
+  name: React.RefObject<HTMLInputElement>;
+  min_price: React.RefObject<HTMLInputElement>;
+  order_by: React.RefObject<HTMLSelectElement>;
+  direction: React.RefObject<HTMLInputElement>;
+  number_sold: React.RefObject<HTMLInputElement>;
+}
+
+interface FilterProps {
+  productCount: number;
+  onSearch: (query: string) => void;
+  locations: Location[];
+  setSearching: (isSearching: boolean) => void;
+}
+
+export default function Filter({ productCount, onSearch, locations, setSearching }: FilterProps): JSX.Element {
+  const refEls: RefElements = {
+    location: useRef<HTMLSelectElement>(null),
+    category: useRef<HTMLSelectElement>(null),
+    name: useRef<HTMLInputElement>(null),
+    min_price: useRef<HTMLInputElement>(null),
+    order_by: useRef<HTMLSelectElement>(null),
+    direction: useRef<HTMLInputElement>(null),
+    number_sold: useRef<HTMLInputElement>(null),
   }
 
-  const [showFilters, setShowFilters] = useState(false)
-  const [query, setQuery] = useState('')
-  const [categories, setCategories] = useState([])
-  const [direction, setDirection] = useState('asc')
+  const [showFilters, setShowFilters] = useState<boolean>(false)
+  const [query, setQuery] = useState<string>('')
+  const [categories, setCategories] = useState<Category[]>([])
+  const [direction, setDirection] = useState<string>('asc')
   
-  const clear = () => {
+  const clear = (): void => {
     for (let ref in refEls) {
-      if (ref === 'direction') {
+      if (ref === 'direction' && refEls[ref].current) {
         refEls[ref].current.checked = false
         setDirection('asc')
-      } else if (["min_price", "name", "number_sold"].includes(ref)) {
+      } else if (["min_price", "name", "number_sold"].includes(ref) && refEls[ref].current) {
         refEls[ref].current.value = ""
       }
-      else {
-        refEls[ref].current.value = 0
+      else if (refEls[ref].current) {
+        refEls[ref].current.value = "0"
       }
     }
     onSearch('')
     setQuery('')
   }
-  const orderByOptions = [
+
+  const orderByOptions: OrderByOption[] = [
     {
       id: 'price',
       name: 'Price'
@@ -44,7 +83,7 @@ export default function Filter({ productCount, onSearch, locations, setSearching
     }
   ]
 
-  const directionOptions = [
+  const directionOptions: DirectionOption[] = [
     {
       name: 'direction',
       label: 'asc'
@@ -64,27 +103,29 @@ export default function Filter({ productCount, onSearch, locations, setSearching
     if (!query){
       setSearching(false)
     }
-  }, [query])
+  }, [query, onSearch, setSearching])
 
   console.log(query)
 
-  useEffect(()=>{
-    getCategories().then((array)=>{
+  useEffect(() => {
+    getCategories().then((array: Category[]) => {
       setCategories(array)
     })
-  },[])
+  }, [])
 
-  const buildQuery = (key, value) => {
+  const buildQuery = (key: string, value: string | undefined): string => {
     if (value && value !== "0") {
       return `${key}=${value}&`
     }
     return ""
   }
 
-  const filter = () => {
+  const filter = (): void => {
     let newQuery = ""
     for (let refEl in refEls) {
-      newQuery += buildQuery(refEl, refEls[refEl].current.value)
+      if (refEls[refEl].current) {
+        newQuery += buildQuery(refEl, refEls[refEl].current.value)
+      }
     }
     setQuery(newQuery)
   }
