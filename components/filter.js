@@ -190,6 +190,7 @@ export default function Filter({ productCount, onSearch, locations, setSearching
                             }
                           }}
                         />
+                        {" "}Descending
                       </label>
                     </div>
                   </div>
