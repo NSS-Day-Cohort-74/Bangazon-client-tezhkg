@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ProductCard } from '../product/card'
 
-export function StoreCard({ store, showProductCards=true, width= "is-half" }) {
+export function StoreCard({ store, showProductCards=true, width= "is-half"}) {
   return (
     <div className={`column ${width}`}>
       <div className="card">
@@ -14,7 +14,7 @@ export function StoreCard({ store, showProductCards=true, width= "is-half" }) {
           <div className="content mb-4">
             <span className="has-text-weight-bold">Owner:</span> {store.name_of_owner} 
           </div>
-          <div className="content mb-4 has-background-light p-3 is-italic">
+          <div className="content mb-4 has-background-light p-3 is-italic" style={{minHeight: "75px"}}>
            Description: {store.description}
           </div>
           <div className="content mb-4">
@@ -25,14 +25,16 @@ export function StoreCard({ store, showProductCards=true, width= "is-half" }) {
           {showProductCards &&
           <div className="content">
             <p className="title is-5 has-text-centered mb-4">All Products</p>
-            <div className="columns is-multiline is-mobile">
+            <div style={{overflow: "auto", height: "400px"}}>
+            <div className="columns is-multiline is-mobile is-gapless box" >
               {store.store_products && store.store_products.map(product => (
-                <div key={product.id} className="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
-                  <div className="has-background-white-ter p-2 mb-3 rounded">
-                    <ProductCard product={product} />
+                <div key={product.id} className="column is-half-mobile is-one-third-tablet is-half-desktop">
+                  <div className="p-2 mb-3 rounded">
+                    <ProductCard product={product} width={"is-full"} />
                   </div>
                 </div>
               ))}
+            </div>
             </div>
           </div>
           }

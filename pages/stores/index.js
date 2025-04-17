@@ -25,7 +25,7 @@ export default function Stores() {
   return (
     <div className="container">
       <section className="section">
-        <h1 className="title is-2 has-text-centered mb-6 mt-6">Stores</h1>
+        <h1 className="title is-1 has-text-centered mb-6 mt-3">Stores</h1>
         
         {isLoading ? (
           <div className="has-text-centered">

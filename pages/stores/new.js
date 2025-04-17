@@ -25,7 +25,6 @@ export default function NewStore() {
         })
         }
         
-        console.log(profile)
         
   return (
     <StoreForm nameEl={nameEl} descriptionEl={descriptionEl} saveEvent={saveStore} router={router} title="Create your store">

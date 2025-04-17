@@ -25,7 +25,6 @@ export default function Profile() {
     })
   }, [])
 
-console.log(profile.favorite_sellers)
   return (
     <>
       <CardLayout title="Favorite Stores" width="is-full">

@@ -22,7 +22,7 @@ export function ProductCard({ product, removeProduct, isOwner = false, img_src, 
           </p>
         </header>
         <div className="card-content">
-          <div className="content">
+          <div className="content" style={{minHeight: "75px"}}>
             {product.description}
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function StoreDetail() {
     }
   }, [id, profile])
 
-  console.log(profile)
+  
 
   const refresh = () => getStoreById(id).then(storeData => {
     if (storeData) {
