@@ -2,7 +2,7 @@ import Table from "../table"
 
 export default function CartDetail({ cart, removeProduct }) {
   const headers = ['Product', 'Price', '']
-  const footers = ['Total', `$${cart.total}`, '']
+  const footers = ['Total', `$${cart.total || 0}`, '']
 
   return (
     <Table headers={headers} footers={footers}>

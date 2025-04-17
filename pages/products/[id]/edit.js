@@ -12,6 +12,10 @@ export default function EditProduct() {
   const [product, setProduct] = useState()
   const { profile } = useAppContext()
   const { id } = router.query
+  const [productImage, setProductImage] = useState(null)  // Add state for the image
+
+ // Add the base64 image string directly
+
 
   useEffect(() => {
     if (id && profile) {
@@ -48,9 +52,13 @@ export default function EditProduct() {
       name: name.value,
       description: description.value,
       price: price.value,
-      categoryId: category.value,
+      category_id: category.value,
       location: location.value,
       quantity: quantity.value
+    }
+
+    if (productImage) {
+      product.image_path = productImage
     }
 
     editProduct(id, product).then(() => router.push(`/products/${id}`))
@@ -62,6 +70,8 @@ export default function EditProduct() {
       saveEvent={saveProduct}
       title="Add a new product"
       router={router}
+      setProductImage={setProductImage}
+      productImage={productImage}
     ></ProductForm>
   )
 }
