@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export function ProductCard({ product, removeProduct, isOwner = false, img_src, width="is-one-fifth", noButtons }) {
+  
   return (
     <div className={`column ${width}`}>
       <div className="card">
