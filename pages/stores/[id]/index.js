@@ -24,7 +24,7 @@ export default function StoreDetail() {
     }
   }, [id, profile])
 
-  console.log(profile)
+  
 
   const refresh = () => getStoreById(id).then(storeData => {
     if (storeData) {
@@ -49,11 +49,15 @@ export default function StoreDetail() {
     const sold_products = store?.sold_products
     
     return (
+      <>
+    {
+      sold_products?.length === 0 ? 
+      <p className='p-3'>There are no sold products yet</p> :
       <div>
     <h1 className='title mt-5'>Sold Products:</h1>
     <div className='section card'>
       <div className='columns is-multiline'>
-    {
+      {
       sold_products?.map(product => (
         <ProductCard
           product={product}
@@ -62,11 +66,12 @@ export default function StoreDetail() {
           removeProduct={removeProduct}
           noButtons={true}
         />
-      ))
+      ))}
+      </div>
+      </div>
+      </div>
     }
-    </div>
-    </div>
-  </div>
+    </>
     )
   }
 
@@ -76,7 +81,7 @@ export default function StoreDetail() {
       <div className="container">
         {
           store.store_products?.length === 0 ?
-            <p>There's no products yet</p>
+            <p className='p-3'>There's no products yet</p>
             :
             <div>
               <h1 className='title'>Selling:</h1>

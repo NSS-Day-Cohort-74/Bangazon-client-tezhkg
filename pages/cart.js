@@ -60,10 +60,10 @@ export default function Cart() {
         <CartDetail cart={cart} removeProduct={removeProduct} />
         <>
           {cart.lineitems && cart.lineitems.length > 0 ? (
-            <a className="card-footer-item" onClick={() => setShowCompleteForm(true)}>Complete Order</a>
+            <a className="card-footer-item button is-primary" onClick={() => setShowCompleteForm(true)}>Complete Order</a>
 
           ) : (<span className='card-footer-item is-disabled'>Complete Order</span>)}
-          <a className="card-footer-item" onClick={() => handleDeleteOrder(cart.id)}>Delete Order</a>
+          <a className="card-footer-item button is-danger" onClick={() => handleDeleteOrder(cart.id)}>Delete Order</a>
         </>
       </CardLayout>
     </>

@@ -66,8 +66,6 @@ export default function Filter({ productCount, onSearch, locations, setSearching
     }
   }, [query])
 
-  console.log(query)
-
   useEffect(()=>{
     getCategories().then((array)=>{
       setCategories(array)
@@ -190,6 +188,7 @@ export default function Filter({ productCount, onSearch, locations, setSearching
                             }
                           }}
                         />
+                        {" "}Descending
                       </label>
                     </div>
                   </div>

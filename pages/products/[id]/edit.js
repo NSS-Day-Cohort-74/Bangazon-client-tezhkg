@@ -6,7 +6,7 @@ import { editProduct, getProductById } from '../../../data/products'
 import ProductForm from '../../../components/product/form'
 import { useAppContext } from '../../../context/state'
 
-export default function NewProduct() {
+export default function EditProduct() {
   const formEl = useRef()
   const router = useRouter()
   const [product, setProduct] = useState()
@@ -17,7 +17,7 @@ export default function NewProduct() {
     if (id && profile) {
       getProductById(id).then(productData => {
         if (productData) {
-          if (productData.store.id === profile.store?.id) {
+          if (productData?.store_id === profile.store?.id) {
             setProduct(productData)
           } else {
             router.back()
@@ -66,7 +66,7 @@ export default function NewProduct() {
   )
 }
 
-NewProduct.getLayout = function getLayout(page) {
+EditProduct.getLayout = function getLayout(page) {
   return (
     <Layout>
       <Navbar />

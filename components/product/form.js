@@ -15,7 +15,6 @@ export default function ProductForm({ formEl, saveEvent, title, router, product 
   const createProductImageString = (event) => {
     if (event.target.files && event.target.files[0]) {
       getBase64(event.target.files[0], (base64ImageString) => {
-        // Pass the image data up to the parent component
         setProductImage(base64ImageString);
       });
     }
@@ -64,7 +63,7 @@ export default function ProductForm({ formEl, saveEvent, title, router, product 
         />
    
         <div>
-          <label htmlFor="image_path">Product Image</label>
+          <label htmlFor="image_path" className="label">Product Image: </label>
           <input type="file" id="image_path" onChange={createProductImageString} />
           {product.id && <input type="hidden" name="product_id" value={product.id} />}
           {productImage && (
@@ -74,10 +73,10 @@ export default function ProductForm({ formEl, saveEvent, title, router, product 
           )}
         </div>
       </form>
-      <div className="card-footer">
-        <a className="card-footer-item" onClick={saveEvent}>Save</a>
-        <a className="card-footer-item" onClick={() => router.back()}>Cancel</a>
-      </div>
+      <>
+        <a className="card-footer-item has-text-centered button is-primary" onClick={saveEvent}>Save</a>
+        <a className="card-footer-item has-text-centered button is-warning" onClick={() => router.back()}>Cancel</a>
+      </>
     </CardLayout>
   )
 }
