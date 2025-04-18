@@ -94,8 +94,8 @@ export const addProduct = async (product) => {
   return data
 }
 
-export function editProduct(id, product) {
-  return fetchWithoutResponse(`products/${id}`, {
+export const editProduct = async (id, product) => {
+  const response =  await fetch(`http://localhost:8000/products/${id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
@@ -103,7 +103,26 @@ export function editProduct(id, product) {
     },
     body: JSON.stringify(product)
   })
+
+  console.log(response.status)
+  if (response.status == 204) {
+    return null
+  }
+
+  const data = await response.json()
+  return data
 }
+
+// export function editProduct(id, product) {
+//   return fetchWithoutResponse(`products/${id}`, {
+//     method: 'PUT',
+//     headers: {
+//       Authorization: `Token ${localStorage.getItem('token')}`,
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(product)
+//   })
+// }
 
 export function recommendProduct(id, username) {
   return fetchWithResponse(`products/${id}/recommend`, {

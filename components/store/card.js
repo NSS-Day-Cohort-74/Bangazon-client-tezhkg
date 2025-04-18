@@ -30,7 +30,7 @@ export function StoreCard({ store, showProductCards=true, width= "is-half"}) {
               {store.store_products && store.store_products.map(product => (
                 <div key={product.id} className="column is-half-mobile is-one-third-tablet is-half-desktop">
                   <div className="p-2 mb-3 rounded">
-                    <ProductCard product={product} width={"is-full"} />
+                    <ProductCard product={product} width={"is-full"} img_src={`http://localhost:8000${product.image_path}`}/>
                   </div>
                 </div>
               ))}

@@ -65,6 +65,7 @@ export default function StoreDetail() {
           isOwner={isOwner}
           removeProduct={removeProduct}
           noButtons={true}
+          img_src={`http://localhost:8000${product.image_path}`}
         />
       ))}
       </div>
@@ -95,6 +96,7 @@ export default function StoreDetail() {
                     isOwner={isOwner}
                     removeProduct={removeProduct}
                     noButtons={false}
+                    img_src={`http://localhost:8000${product.image_path}`}
                   />
                 ))
               }
