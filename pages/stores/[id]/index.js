@@ -24,6 +24,8 @@ export default function StoreDetail() {
     }
   }, [id, profile])
 
+  
+
   const refresh = () => getStoreById(id).then(storeData => {
     if (storeData) {
       setStore(storeData)
@@ -42,26 +44,69 @@ export default function StoreDetail() {
     unfavoriteStore(id).then(refresh)
   }
 
+
+  const SoldProducts = () => {
+    const sold_products = store?.sold_products
+    
+    return (
+      <>
+    {
+      sold_products?.length === 0 ? 
+      <p className='p-3'>There are no sold products yet</p> :
+      <div>
+    <h1 className='title mt-5'>Sold Products:</h1>
+    <div className='section card'>
+      <div className='columns is-multiline'>
+      {
+      sold_products?.map(product => (
+        <ProductCard
+          product={product}
+          key={product.id}
+          isOwner={isOwner}
+          removeProduct={removeProduct}
+          noButtons={true}
+          img_src={`http://localhost:8000${product.image_path}`}
+        />
+      ))}
+      </div>
+      </div>
+      </div>
+    }
+    </>
+    )
+  }
+
   return (
     <>
       <Detail store={store} isOwner={isOwner} favorite={favorite} unfavorite={unfavorite} />
-      <div className="columns is-multiline">
+      <div className="container">
         {
-          store.products?.map(product => (
-            <ProductCard
-              product={product}
-              key={product.id}
-              isOwner={isOwner}
-              removeProduct={removeProduct}
-            />
-          ))
-        }
-        {
-          store.products?.length === 0 ?
-            <p>There's no products yet</p>
+          store.store_products?.length === 0 ?
+            <p className='p-3'>There's no products yet</p>
             :
-            <></>
+            <div>
+              <h1 className='title'>Selling:</h1>
+              <div className='section card'>
+                <div className='columns is-multiline'>
+              {
+                store.store_products?.map(product => (
+                  <ProductCard
+                    product={product}
+                    key={product.id}
+                    isOwner={isOwner}
+                    removeProduct={removeProduct}
+                    noButtons={false}
+                    img_src={`http://localhost:8000${product.image_path}`}
+                  />
+                ))
+              }
+              </div>
+              </div>
+            </div>
         }
+      </div>
+      <div className='container'>
+       <SoldProducts />
       </div>
     </>
   )

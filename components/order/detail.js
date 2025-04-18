@@ -2,16 +2,16 @@ import Table from "../table"
 
 export default function CartDetail({ cart, removeProduct }) {
   const headers = ['Product', 'Price', '']
-  const footers = ['Total', cart.total, '']
+  const footers = ['Total', `$${cart.total || 0}`, '']
 
   return (
     <Table headers={headers} footers={footers}>
       {
-        cart.products?.map(product => {
+        cart.lineitems?.map(product => {
           return (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
+            <tr key={product.product.id}>
+              <td>{product.product.name}</td>
+              <td>${product.product.price}</td>
               <td>
                 <span className="icon is-clickable" onClick={() => removeProduct(product.id)}>
                   <i className="fas fa-trash"></i>

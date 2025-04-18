@@ -15,7 +15,7 @@ export function getProducts(query=undefined) {
 }
 
 export function getCategories() {
-  return fetchWithResponse('categories', {
+  return fetchWithResponse('productcategories', {
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`
     }
@@ -31,16 +31,18 @@ export function getProductById(id) {
 }
 
 export function addProductToOrder(id) {
-  return fetchWithResponse(`products/${id}/add_to_order`, {
+  return fetchWithResponse(`profile/cart`, {
     method: 'POST',
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`
-    }
+      Authorization: `Token ${localStorage.getItem('token')}`,
+      "Content-Type": 'application/json'
+    }, 
+    body: JSON.stringify({"product_id": id})
   })
 }
 
 export function removeProductFromOrder(id) {
-  return fetchWithoutResponse(`products/${id}/remove-from-order`, {
+  return fetchWithoutResponse(`lineitems/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`
@@ -58,7 +60,7 @@ export function deleteProduct(id) {
 }
 
 export function rateProduct(productId, rating) {
-  return fetchWithResponse(`products/${productId}/rate-product`, {
+  return fetchWithResponse(`products/${productId}/rate_product`, {
     method: 'POST',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
@@ -68,8 +70,8 @@ export function rateProduct(productId, rating) {
   })
 }
 
-export function addProduct(product) {
-  return fetchWithResponse(`products`, {
+export const addProduct = async (product) => {
+  const response =  await fetch(`http://localhost:8000/products`, {
     method: 'POST',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
@@ -77,10 +79,12 @@ export function addProduct(product) {
     },
     body: JSON.stringify(product)
   })
+  const data = await response.json()
+  return data
 }
 
-export function editProduct(id, product) {
-  return fetchWithoutResponse(`products/${id}`, {
+export const editProduct = async (id, product) => {
+  const response =  await fetch(`http://localhost:8000/products/${id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
@@ -88,6 +92,13 @@ export function editProduct(id, product) {
     },
     body: JSON.stringify(product)
   })
+
+  if (response.status == 204) {
+    return null
+  }
+
+  const data = await response.json()
+  return data
 }
 
 export function recommendProduct(id, username) {
@@ -112,11 +123,21 @@ export function likeProduct(productId) {
 }
 
 export function unLikeProduct(productId) {
-  return fetchWithoutResponse(`products/${productId}/unlike`, {
+  return fetchWithoutResponse(`products/${productId}/like`, {
     method: 'DELETE',
     headers: {
       Authorization: `Token ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
     },
+  })
+}
+
+export function likedProducts() {
+  return fetchWithResponse('products/liked', {
+    method: "GET",
+    headers:{
+      Authorization: `Token ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    }
   })
 }

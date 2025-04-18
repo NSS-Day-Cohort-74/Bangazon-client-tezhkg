@@ -3,15 +3,20 @@ import Filter from '../../components/filter'
 import Layout from '../../components/layout'
 import Navbar from '../../components/navbar'
 import { ProductCard } from '../../components/product/card'
-import { getProducts } from '../../data/products'
+import { getCategories, getProducts } from '../../data/products'
 
 export default function Products() {
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
+    getCategories().then(data => {
+      setCategories(data)
+    })
     getProducts().then(data => {
       if (data) {
 
@@ -38,19 +43,37 @@ export default function Products() {
       }
     })
   }
-
   if (isLoading) return <p>{loadingMessage}</p>
 
   return (
     <>
-      <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
-
-      <div className="columns is-multiline">
-        {products.map(product => (
-          <ProductCard product={product} key={product.id} />
+        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} setSearching={setSearching}/>
+      
+      {searching ? (
+        <>
+          <h1 className='title pt-4'>Products matching filters</h1>
+          <div className="columns is-multiline">
+            {products.map(product => (
+              <ProductCard product={product} key={product.id} img_src={product.image_path}/>
+            ))}
+          </div>
+        </>
+      ):(
+        <div>
+        {categories.map(category => (
+         <div key={category.id}>
+          <h1 className='title pt-4' >{category.name}</h1>
+          <div className='box'>
+            <div className='columns is-multiline'>
+              {category.products.map(product => (
+              <ProductCard product={product}  key={product.id} img_src={`http://localhost:8000${product.image_path}`} className='column'/> ))}
+            </div>
+          </div>
+        </div>              
         ))}
-      </div>
-    </>
+         </div>       
+      )}
+    </> 
   )
 }
 

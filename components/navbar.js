@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { useEffect, useState, useRef } from 'react'
 import { useAppContext } from '../context/state'
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
   const { token, profile } = useAppContext()
   const hamburger = useRef()
   const navbar = useRef()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (token) {
@@ -35,21 +37,22 @@ export default function Navbar() {
           {
             profile.store ?
               <>
-                <Link href={`/stores/${profile.store.id}`}><a className="navbar-item">View Your Store</a></Link>
+                <Link href={`/stores/${profile.store.id}`} className="navbar-item">View Your Store</Link>
                 <Link href="/products/new" className="navbar-item">Add a new Product</Link>
               </>
               :
               <Link href="/stores/new" className="navbar-item">Interested in selling?</Link>
           }
           <hr className="navbar-divider"></hr>
-          <a className="navbar-item" onClick={
+          <Link href='/login' className="navbar-item" onClick={
             () => {
               localStorage.removeItem('token')
               setIsLoggedIn(false)
+              router.push('/login')
             }}
           >
             Log out
-          </a>
+          </Link>
         </div>
       </div>
     )
@@ -71,6 +74,7 @@ export default function Navbar() {
   }
 
   return (
+    <section className='section'>
 
     <nav className="navbar mb-3 is-warning px-5 is-fixed-top is-top" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -99,5 +103,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </section>
   )
 }

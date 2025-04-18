@@ -10,7 +10,10 @@ export function AppWrapper({ children }) {
   const router = useRouter()
 
   useEffect(() => {
-    setToken(localStorage.getItem('token'))
+    const storedToken = localStorage.getItem('token')
+    if (storedToken){
+      setToken(storedToken)
+    }
   }, [])
 
   useEffect(() => {
@@ -24,8 +27,10 @@ export function AppWrapper({ children }) {
           }
         })
       }
+    }else {
+      setProfile({})
     }
-  }, [token])
+  }, [token, router.pathname])
 
   return (
     <AppContext.Provider value={{ profile, token, setToken, setProfile }}>

@@ -14,25 +14,43 @@ export default function Register() {
   const lastName = useRef('')
   const username = useRef('')
   const password = useRef('')
+  const email = useRef('')
+  const phone_number = useRef('')
+  const address = useRef('')
   const router = useRouter()
+
+
 
   const submit = (e) => {
     e.preventDefault()
 
     const user = {
       username: username.current.value,
+      email: username.current.value,
       password: password.current.value,
       first_name: firstName.current.value,
-      last_name: lastName.current.value
+      last_name: lastName.current.value,
+      phone_number: phone_number.current.value,
+      address: address.current.value
     }
 
     register(user).then((res) => {
+      
       if (res.token) {
         setToken(res.token)
         router.push('/')
       }
     })
   }
+
+//   login(user).then((res) => {
+//     if (res.token) {
+//       setToken(res.token)
+//       router.push('/')
+//     }
+//   })
+// }
+
 
   return (
     <div className="columns is-centered">
@@ -64,6 +82,24 @@ export default function Register() {
             type="password"
             label="Password"
           />
+          <Input
+            id="email"
+            refEl={email}
+            type="text"
+            label="Email"
+          />
+          <Input
+            id="phone_number"
+            refEl={phone_number}
+            type="text"
+            label="Phone Number"
+          />
+          <Input
+            id="address"
+            refEl={address}
+            type="text"
+            label="Address"
+           />
 
           <div className="field is-grouped">
             <div className="control">

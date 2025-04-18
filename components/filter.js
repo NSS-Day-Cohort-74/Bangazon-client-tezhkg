@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getCategories } from '../data/products'
 import { Input, Select } from './form-elements'
 
-export default function Filter({ productCount, onSearch, locations }) {
+export default function Filter({ productCount, onSearch, locations, setSearching }) {
   const refEls = {
     location: useRef(),
     category: useRef(),
@@ -15,14 +15,15 @@ export default function Filter({ productCount, onSearch, locations }) {
 
   const [showFilters, setShowFilters] = useState(false)
   const [query, setQuery] = useState('')
-  const [categories, setCategories] = useState([{id: 1, name: 'Apples'}, {id: 2, name: 'Oranges'}, {id: 3, name: 'Lemons'}])
+  const [categories, setCategories] = useState([])
   const [direction, setDirection] = useState('asc')
+  
   const clear = () => {
     for (let ref in refEls) {
       if (ref === 'direction') {
         refEls[ref].current.checked = false
         setDirection('asc')
-      } else if (["min_price", "name"].includes(ref)) {
+      } else if (["min_price", "name", "number_sold"].includes(ref)) {
         refEls[ref].current.value = ""
       }
       else {
@@ -30,6 +31,7 @@ export default function Filter({ productCount, onSearch, locations }) {
       }
     }
     onSearch('')
+    setQuery('')
   }
   const orderByOptions = [
     {
@@ -56,8 +58,19 @@ export default function Filter({ productCount, onSearch, locations }) {
   useEffect(() => {
     if (query) {
       onSearch(query)
+      setSearching(true)
+    } 
+    
+    if (!query){
+      setSearching(false)
     }
   }, [query])
+
+  useEffect(()=>{
+    getCategories().then((array)=>{
+      setCategories(array)
+    })
+  },[])
 
   const buildQuery = (key, value) => {
     if (value && value !== "0") {
@@ -175,7 +188,7 @@ export default function Filter({ productCount, onSearch, locations }) {
                             }
                           }}
                         />
-                        desc
+                        {" "}Descending
                       </label>
                     </div>
                   </div>

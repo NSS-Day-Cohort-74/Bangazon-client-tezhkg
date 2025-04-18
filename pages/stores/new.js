@@ -8,7 +8,6 @@ import StoreForm from '../../components/store/form'
 
 export default function NewStore() {
   const { setProfile, profile } = useAppContext()
-
   const nameEl = useRef()
   const descriptionEl = useRef()
   const router = useRouter()
@@ -21,11 +20,12 @@ export default function NewStore() {
       setProfile({
         ...profile,
         store: res
-      })
-      router.push(`/stores/${res.id}`)
-    })
-  }
-
+        })
+        router.push(`/stores/${res.id}`)
+        })
+        }
+        
+        
   return (
     <StoreForm nameEl={nameEl} descriptionEl={descriptionEl} saveEvent={saveStore} router={router} title="Create your store">
       <p>Give your new store a name and description. Then add products on the next page</p>
