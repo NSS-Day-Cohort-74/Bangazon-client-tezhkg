@@ -70,17 +70,6 @@ export function rateProduct(productId, rating) {
   })
 }
 
-// export function addProduct(product) {
-//   return fetchWithResponse(`products`, {
-//     method: 'POST',
-//     headers: {
-//       Authorization: `Token ${localStorage.getItem('token')}`,
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(product)
-//   })
-// }
-
 export const addProduct = async (product) => {
   const response =  await fetch(`http://localhost:8000/products`, {
     method: 'POST',
@@ -104,7 +93,6 @@ export const editProduct = async (id, product) => {
     body: JSON.stringify(product)
   })
 
-  console.log(response.status)
   if (response.status == 204) {
     return null
   }
@@ -112,17 +100,6 @@ export const editProduct = async (id, product) => {
   const data = await response.json()
   return data
 }
-
-// export function editProduct(id, product) {
-//   return fetchWithoutResponse(`products/${id}`, {
-//     method: 'PUT',
-//     headers: {
-//       Authorization: `Token ${localStorage.getItem('token')}`,
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(product)
-//   })
-// }
 
 export function recommendProduct(id, username) {
   return fetchWithResponse(`products/${id}/recommend`, {
