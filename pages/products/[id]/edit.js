@@ -5,6 +5,7 @@ import Navbar from '../../../components/navbar'
 import { editProduct, getProductById } from '../../../data/products'
 import ProductForm from '../../../components/product/form'
 import { useAppContext } from '../../../context/state'
+import Modal from '../../../components/modal'
 
 export default function EditProduct() {
   const formEl = useRef()
@@ -13,6 +14,8 @@ export default function EditProduct() {
   const { profile } = useAppContext()
   const { id } = router.query
   const [productImage, setProductImage] = useState(null)  // Add state for the image
+  const [errorData, setErrorData] = useState({})
+  const [showModal, setShowModal] = useState(false)
 
  // Add the base64 image string directly
 
@@ -61,18 +64,38 @@ export default function EditProduct() {
       product.image_path = productImage
     }
 
-    editProduct(id, product).then(() => router.push(`/products/${id}`))
+    editProduct(id, product).then((res) => {
+      if (res?.price){
+        setShowModal(true)
+        setErrorData(res)
+      } else {
+        router.push(`/products/${id}`)
+      }
+      }
+    ) 
   }
 
   return (
-    <ProductForm
-      formEl={formEl}
-      saveEvent={saveProduct}
-      title="Add a new product"
-      router={router}
-      setProductImage={setProductImage}
-      productImage={productImage}
-    ></ProductForm>
+    <>
+      <Modal showModal={showModal} setShowModal={setShowModal} title="There are issues with your submission.">
+        <div className="modal-card-body">
+          {Object.entries(errorData).map(([key, value]) => {
+            return (
+              <p key={key}>{key}: {value}</p>
+            )
+          })}
+        </div>
+        <footer></footer>
+      </Modal>
+      <ProductForm
+        formEl={formEl}
+        saveEvent={saveProduct}
+        title="Add a new product"
+        router={router}
+        setProductImage={setProductImage}
+        productImage={productImage}
+      ></ProductForm>
+    </>
   )
 }
 
